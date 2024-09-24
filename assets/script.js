@@ -10,14 +10,14 @@ document.addEventListener('DOMContentLoaded', function() {
         renderer: 'svg',
         loop: true,
         autoplay: true,
-        path: '/assets/animation.json' 
+        path: 'assets/animation.json' 
     };
 
     
     const anim = lottie.loadAnimation(animData);
 });
 
-
+/*
 jQuery(document).ready(function($) {
     $('.learn-more-btn').click(function(event) {
         event.preventDefault();
@@ -30,6 +30,22 @@ jQuery(document).ready(function($) {
     $('.learn-more-btn').mouseleave(function() {
         var additionalInfo = $(this).siblings('.additional-info');
         additionalInfo.slideUp();
+    });
+});
+*/
+jQuery(document).ready(function($) {
+    // Trigger on button click
+    $('.learn-more-btn').click(function(event) {
+        event.preventDefault(); // Prevent default behavior (e.g., link navigation)
+        
+        // Get the additional info section that's next to the clicked button
+        var additionalInfo = $(this).siblings('.additional-info');
+        
+        // Close any other open .additional-info sections
+        $('.additional-info').not(additionalInfo).slideUp();
+        
+        // Toggle the visibility of the current additional-info section
+        additionalInfo.slideToggle();
     });
 });
 

@@ -25,11 +25,12 @@ body {
 
 #lottie-container {
     position: absolute;
-    top: 38%; 
+    top: 62%; 
     left: 50%;
-    width: 250px;
+    width: 300px;
     z-index: 9999;
     transform: translate(-50%, -50%);
+    
     
 }
 
@@ -106,4 +107,10 @@ body {
 
 .card:hover .retract-arrow {
     display: inline-block;
+}
+
+img {
+    text-align: center;
+    width: 350px;;
+    height:auto;
 }
