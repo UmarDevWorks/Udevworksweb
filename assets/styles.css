@@ -1,0 +1,109 @@
+body {
+    background-color: #0c0c28; /* Midnight Blue */
+    color: #fff; /* White text */
+}
+.navbar {
+    background-color: #070719; /* Navy Blue */
+}
+.jumbotron {
+    background-color: #0c0c28; /* Navy Blue */
+    color: #fff; /* White text */
+}
+.card {
+    background-color: #0c0c28; /* Navy Blue */
+    color: #fff; /* White text */
+}
+
+.navbar.fixed-top {
+    background-color: #0c0c28 !important;
+}
+
+
+#intro {
+    position: relative;
+}
+
+#lottie-container {
+    position: absolute;
+    top: 38%; 
+    left: 50%;
+    width: 250px;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    
+}
+
+.social-link img {
+    width: 32px; 
+    height: 32px;
+    margin-right: 5px;
+}
+
+#socials {
+    background-color: #0c0c28; 
+    padding: 30px;
+    border-radius: 8px;
+}
+
+.social-link {
+    display: inline-block;
+    text-decoration: none;
+    color: #ffffffdc;
+    margin-bottom: 10px;
+    padding: 10px; 
+    background-color: #3a3b3d; 
+    border-radius: 5px; 
+    
+}
+
+.social-link img {
+    width: 32px;
+    height: auto;
+    margin-right: 5px;
+}
+
+.social-link:hover {
+    background-color: #232425;
+    text-decoration: none;
+
+}
+
+#projects {
+    margin-top: 250px;
+    background-color: #060618;
+}
+
+#projects .card:hover {
+    background-color: #09091e; 
+    transition: background-color 0.4s ease; 
+    width:fit-content;
+}
+
+.additional-info {
+    display: none;
+    margin-top: 10px;
+}
+
+.retract-arrow {
+    display: none;
+    cursor: pointer;
+}
+
+.card:hover .learn-more-btn {
+    display: none;
+    background-color: #0c0c28;
+    color: #0c0c28;
+    border: none; 
+    padding: 10px 20px; 
+    border-radius: 5px; 
+    cursor: pointer;
+    transition: background-color 0.3s ease; 
+}
+
+.card:hover .additional-info {
+    display: block;
+}
+
+.card:hover .retract-arrow {
+    display: inline-block;
+}
