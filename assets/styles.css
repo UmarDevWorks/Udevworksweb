@@ -38,6 +38,11 @@ body {
     
 }
 
+.container {
+    max-width: 100%; 
+    overflow-x: hidden; 
+}
+
 .lottie-wrapper {
     display: flex;
     justify-content: center;
