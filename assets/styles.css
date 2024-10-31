@@ -1,17 +1,17 @@
 body {
-    background-color: #0c0c28; /* Midnight Blue */
-    color: #fff; /* White text */
+    background-color: #0c0c28; 
+    color: #fff;
 }
 .navbar {
-    background-color: #070719; /* Navy Blue */
+    background-color: #070719; 
 }
 .jumbotron {
-    background-color: #0c0c28; /* Navy Blue */
-    color: #fff; /* White text */
+    background-color: #0c0c28; 
+    color: #fff; 
 }
 .card {
-    background-color: #0c0c28; /* Navy Blue */
-    color: #fff; /* White text */
+    background-color: #0c0c28; 
+    color: #fff; 
 }
 
 .navbar.fixed-top {
@@ -33,6 +33,15 @@ body {
     
     
 }
+
+.lottie-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 100px; 
+    scale: 2;
+}
+
 
 svg {
     padding: 20%;
