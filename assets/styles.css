@@ -34,6 +34,11 @@ body {
     
 }
 
+svg {
+    padding: 20%;
+    scale: 1.25;
+}
+
 .social-link img {
     width: 32px; 
     height: 32px;
@@ -113,4 +118,15 @@ img {
     text-align: center;
     width: 350px;;
     height:auto;
+}
+
+.video-container {
+    width: 300px;          
+    height: auto;         
+    overflow: hidden;    
+}
+
+.video-container video {
+    width: 100%;         
+    height: auto;        
 }

@@ -70,169 +70,23 @@
                     <div class="card-body">
                         <h5 class="card-title">H&T Clock</h5>
                         <p class="card-text">A humidity and temperature Display with NTP time and Date.</p>
+                        
                         <button class="learn-more-btn">Learn More</button>
                         <div class="additional-info">
+                        <div class="video-container mb-4">
+                            <video controls>
+                                <source src="assets/output.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
                             <p class="long-description">        <h3>Project Overview:</h3>
                                 <p>This project involves an ESP8266 or ESP32 microcontroller, a DHT11 temperature and humidity sensor, and an SSD1306 OLED display. The microcontroller fetches data from the DHT11 sensor and displays temperature, humidity, time, and date on the OLED display.</p>
                                 <h3>Full code</h3>
                                 <div class="code-container">
-                                <pre><code class="language-cpp">
-                                        #include &lt;WiFi.h&gt;
-                                        #include &lt;WiFiUdp.h&gt;
-                                        #include &lt;Adafruit_GFX.h&gt;
-                                        #include &lt;Adafruit_SSD1306.h&gt;
-                                        #include &lt;DHT.h&gt;
-                                        #include &lt;TimeLib.h&gt;
-                                        #include &lt;NTPClient.h&gt;
-                                        
-                                        #define SCREEN_WIDTH 128
-                                        #define SCREEN_HEIGHT 64
-                                        
-                                        #define OLED_RESET    -1
-                                        #define DHT_PIN       4   // Pin connected to DHT11
-                                        #define DHT_TYPE      DHT11
-                                        
-                                        #define SDA_PIN 21  // SDA pin for OLED
-                                        #define SCL_PIN 22  // SCL pin for OLED
-                                        
-                                        #define TIME_ZONE_OFFSET 5 * 3600 // Offset for GMT+5 timezone in seconds
-                                        
-                                        const char* ssid = "SSID_OF_YOUR_NETWORK_HERE";
-                                        const char* password = "YOUR_PASSWORD_HERE";
-                                        
-                                        WiFiUDP ntpUDP;
-                                        NTPClient timeClient(ntpUDP, "pool.ntp.org", TIME_ZONE_OFFSET);
-                                        
-                                        DHT dht(DHT_PIN, DHT_TYPE);
-                                        Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
-                                        
-                                        unsigned long previousMillis = 0;
-                                        const long interval = 5000; // Interval to switch slides (2 seconds)
-                                        
-                                        void setup() {
-                                          Serial.begin(115200);
-                                          
-                                          if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
-                                            Serial.println(F("SSD1306 allocation failed"));
-                                            for (;;);
-                                          }
-                                          
-                                          delay(2000); // Pause for 2 seconds to let the OLED display initialize
-                                        
-                                          WiFi.begin(ssid, password);
-                                          while (WiFi.status() != WL_CONNECTED) {
-                                            delay(1000);
-                                            Serial.println("Connecting to WiFi...");
-                                          }
-                                          
-                                          Serial.println("Connected to WiFi");
-                                          
-                                          dht.begin();
-                                          timeClient.begin();
-                                        }
-                                        
-                                        void loop() {
-                                          unsigned long currentMillis = millis();
-                                          
-                                          if (currentMillis - previousMillis >= interval) {
-                                            previousMillis = currentMillis;
-                                            
-                                            display.clearDisplay();
-                                            
-                                            // Slide 1: Display DHT11 data
-                                            float humidity = dht.readHumidity();
-                                            float temperature = dht.readTemperature();
-                                        
-                                            if (isnan(humidity) || isnan(temperature)) {
-                                              Serial.println("Failed to read from DHT sensor!");
-                                            } else {
-                                              Serial.print("T:");
-                                              Serial.print(temperature);
-                                              Serial.print(" °C, H:");
-                                              Serial.print(humidity);
-                                              Serial.println(" %");
-                                        
-                                              display.setTextSize(1);
-                                              display.setTextColor(SSD1306_WHITE);
-                                              display.setCursor(0, 0);
-                                              display.println("Tval");
-                                              display.println("Hval");
-                                              display.setTextSize(2);
-                                              
-                                              
-                                              display.println(temperature);
-                                              
-                                              
-                                              
-                                              display.println(humidity);
-                                              display.print("%");
-                                            }
-                                            
-                                            display.display();
-                                            delay(6000); // Display DHT data for 6 seconds before switching
-                                            
-                                            display.clearDisplay();
-                                            
-                                            // Slide 2: Display time in 12-hour format from NTP server
-                                            timeClient.update();
-                                            String formattedTime = timeClient.getFormattedTime();
-                                            int hour = timeClient.getHours();
-                                            bool isPM = false;
-                                        
-                                            if (hour >= 12) {
-                                              isPM = true;
-                                              if (hour > 12) {
-                                                hour -= 12;
-                                              }
-                                            }
-                                            if (hour == 0) {
-                                              hour = 12;
-                                            }
-                                        
-                                            String am_pm = isPM ? "PM" : "AM";
-                                            formattedTime = String(hour) + timeClient.getFormattedTime().substring(2);
-                                            formattedTime += "" + am_pm;
-                                            
-                                            Serial.print("Time (GMT+5): ");
-                                            Serial.println(formattedTime);
-                                            
-                                            display.setTextSize(1);
-                                            display.setTextColor(SSD1306_WHITE);
-                                            display.setCursor(0, 0);
-                                            display.println("Time (GMT+5):");
-                                            display.setTextSize(2);
-                                            display.println(formattedTime);
-                                            
-                                            display.display();
-                                            delay(3000); // Display time for 3 seconds before switching
-                                        
-                                            display.clearDisplay();
-                                            
-                                            // Slide 3: Display date
-                                            int dayf = day();
-                                            int monthf = month();
-                                            int yearf = year();
-                                            String fmd = timeClient.getFormattedDate();
-                                            Serial.print("Date (GMT+5): ");
-                                            Serial.println(fmd);
-                                            String prt = fmd.substring(0, 10);
-                                            
-                                            Serial.println();
-                                        
-                                            display.setTextSize(1);
-                                            display.setTextColor(SSD1306_WHITE);
-                                            display.setCursor(0, 0);
-                                            display.println("Date (GMT+5):");
-                                            display.setTextSize(2);
-                                            display.print(prt);
-                                            
-                                            
-                                            display.display();
-                                            delay(3000); // Display date for 3 seconds before switching
-                                          }
-                                        }
-                                </code></pre>
-                            </div>
+                                <a href="https://github.com/UmarDevWorks/DHT-NTPCLOCK">Code available on GitRepo</a>
+
+                    
+                                </div>
                                 <h3>Wiring Connections:</h3>
                                 
                                 <h4>ESP8266/ESP32 to OLED SSD1306:</h4>
@@ -290,34 +144,11 @@
                                 <h3>Summary:</h3>
                                 <p>The ESP8266/ESP32 connects to both the OLED display and DHT11 sensor. The OLED display shows temperature, humidity, time, and date data fetched from the DHT11 sensor and an NTP server via WiFi. Proper wiring ensures data communication between the microcontroller, sensor, and display, while the code manages data collection and display functionality.</p>
                                 <p>Remember to validate the pin configurations and wiring connections for accurate operation of the project. Correctly set up, this project provides real-time environmental data displayed on the OLED screen.</p>
-                                <button class="copy-btn">Copy to Clipboard</button>
-                                <script>document.querySelectorAll('.copy-btn').forEach(button => {
-                                    button.addEventListener('click', () => {
-                                      const codeBlock = button.parentElement.querySelector('code');
-                                      if (!codeBlock) {
-                                        console.error('Code block not found');
-                                        return;
-                                      }
-                                      const text = codeBlock.innerText;
-                                  
-                                      navigator.clipboard.writeText(text)
-                                        .then(() => {
-                                          button.innerText = 'Copied!';
-                                          setTimeout(() => {
-                                            button.innerText = 'Copy to Clipboard';
-                                          }, 2000);
-                                        })
-                                        .catch(err => {
-                                          console.error('Failed to copy:', err);
-                                        });
-                                    });
-                                  });
-                                  </script>
                                 
 
                                 
                             </div></p>
-                            <span class="retract-arrow">&uarr;</span>
+                           
                         </div>
                     </div>
                 </div>
@@ -346,7 +177,7 @@
             <h2 class="text-center mb-4">Socials</h2>
             <div class="row">
                 <div class="col-md-6">
-                    <a href="https://github.com/Umar234123" target="_blank" class="social-link">
+                    <a href="https://github.com/UmarDevWorks" target="_blank" class="social-link">
                         <img src="https://github.com/favicon.ico" alt="GitHub Icon"> My GitHub
                         <p></p>
                     </a>
@@ -362,5 +193,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-cpp.min.js"></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"8db4f995d8ab4124","version":"2024.10.4","r":1,"token":"5dd4d07173aa4ca186174682b60ac164","serverTiming":{"name":{"cfExtPri":true,"cfL4":true,"cfSpeedBrain":true,"cfCacheStatus":true}}}' crossorigin="anonymous"></script>
 </body>
 </html>
+
