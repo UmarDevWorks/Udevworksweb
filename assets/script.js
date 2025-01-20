@@ -1,5 +1,5 @@
 jQuery(document).ready(function($) {
-    // Trigger on button click
+    
     $('.learn-more-btn').click(function(event) {
         event.preventDefault();
         
@@ -20,7 +20,7 @@ $(document).ready(function() {
         renderer: 'svg',
         loop: true,
         autoplay: true,
-        path: 'assets/animation.json' 
+        path: '/assets/animation.json' 
     });
 
     
@@ -32,3 +32,4 @@ $(document).ready(function() {
     $(window).on('resize', resizeLottie);
     resizeLottie(); 
 });
+
