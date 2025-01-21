@@ -544,3 +544,33 @@ html, body {
     border-radius:10px;
 }
 
+svg {
+    padding: 20%;
+    scale: 1.25;
+}
+
+#lottie-container {
+    position: absolute;
+    top: 62%; 
+    left: 50%;
+    width: 300px;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    overflow-x: hidden;
+    overflow-y: hidden;
+    
+    
+}
+
+
+
+.lottie-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 100px; 
+    scale: 1.85;
+    max-width: 100%;
+    overflow-x: hidden;
+    overflow:hidden;
+}
