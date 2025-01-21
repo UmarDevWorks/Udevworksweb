@@ -1,35 +1,18 @@
-jQuery(document).ready(function($) {
-    
-    $('.learn-more-btn').click(function(event) {
-        event.preventDefault();
-        
-        
-        var additionalInfo = $(this).siblings('.additional-info');
-        
-        
-        $('.additional-info').not(additionalInfo).slideUp();
-        
-        
-        additionalInfo.slideToggle();
-    });
-});
-
-$(document).ready(function() {
+document.addEventListener('DOMContentLoaded', function() {
     let animation = lottie.loadAnimation({
         container: document.getElementById('lottie-container'),
         renderer: 'svg',
         loop: true,
         autoplay: true,
-        path: '/assets/animation.json' 
+        path: '/assets/animation.json'
     });
 
-    
     function resizeLottie() {
-        const container = $('#lottie-container');
-        container.css('height', container.width() * 0.75); 
+        const container = document.getElementById('lottie-container');
+        container.style.height = container.offsetWidth * 0.75 + 'px'; 
     }
 
-    $(window).on('resize', resizeLottie);
-    resizeLottie(); 
+    window.addEventListener('resize', resizeLottie);
+    
+    resizeLottie();
 });
-
